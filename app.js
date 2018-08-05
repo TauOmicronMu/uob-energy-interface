@@ -87,7 +87,8 @@ CIRC_TXT_PAD = 25;
 
 CIRC_PAD = 20;
 
-GRADIENT = ["#09FF00", "#2FD700", "#55AF00", "#7B8700", "#A25F00", "#B44C00", "#C73900", "#D92600", "#EC1300", "#FF0000"];
+// GRADIENT = ["#09FF00", "#2FD700", "#55AF00", "#7B8700", "#A25F00", "#B44C00", "#C73900", "#D92600", "#EC1300", "#FF0000"];
+GRADIENT = ["#FFEBEB", "#FFD8d8", "#FFC4C4", "#FFB1B1", "#FF9D9D", "#FF8989", "#FF7676", "#FF6262", "#FF4E4E", "#FF3B3B", "#FF2727", "#FF1414", "#FF0000"];
 
 MAX_CO2 = 0.0;
 
@@ -380,7 +381,7 @@ function draw_circle(r, col) {
       }
     }
     
-    if((a - r) < 0 || (b - r) < 0 || (a + r) > width || (b + r) > height) intersects = true;
+    if((a - r) < 20 || (b - r) < 20 || (a + r) > width - 20 || (b + r) > height - 20) intersects = true;
     
     // if it does, try again!
     if(intersects) continue; 
