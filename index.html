@@ -7,40 +7,74 @@
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src='app.js'></script>
+
+    <script>
+      building_info = document.getElementById("building-info");
+
+      /*
+       * Handle the onclick events for the buttons that change between visualisations
+       */
+      function button_onclick(value) {
+        // Clear the screen
+        building_info.style.display = "none";
+
+        const context = document.getElementById("visualisation-canvas").getContext('2d');
+        context.clearRect(-100, -100, canvas.width + 100, canvas.height + 100);
+        Plotly.purge('visualisation-container');
+
+
+        CURRENT_SCREEN = value;
+
+        // Show the new visualisation
+        update_counters();
+        draw(CURRENT_SCREEN);
+      }
+
+    </script>
   </head>
   
-  <body onclick="handle_click(event)">
+  <body>
     <div id='info-box'>
       <h2> University of Birmingham Energy Interface </h2>
       <p> This visualisation shows the energy usage and Co2 emissions of buildings across campus.</p>
       <hr>
-      <h3> Building Information </h3>
-      <p> <i class="fas fa-arrow-left"></i> Click on a circle to view information about that building </p>
-      <p><b>Name:          </b> <span id='info-building-name'> </span></p>
-      <p><b>Location:      </b> <span id='info-building-location'> </span></p>
-      <p><b>Energy Usage:  </b> <span id='info-building-energy'> </span></p>
-      <p><b>Co2 Emissions: </b> <span id='info-co2-emissions'> </span></p>
-      <p><b>Energy Cost:   </b> <span id='info-energy-cost'> </span></p>
-      <hr>
-      <h3> Across Campus </h3>
-      <center>
-      <div id='kwh-info' class='info'>
-        <p class='info-box-text'><span id='kwh-value'>0</span><br>kWh</p>
+      <div id="building-info">
+        <h3> Building Information </h3>
+        <p> <i class="fas fa-arrow-left"></i> Click on a circle to view information about that building </p>
+        <p><b>Name:          </b> <span id='info-building-name'> </span></p>
+        <p><b>Location:      </b> <span id='info-building-location'> </span></p>
+        <p><b>Energy Usage:  </b> <span id='info-building-energy'> </span></p>
+        <p><b>Co2 Emissions: </b> <span id='info-co2-emissions'> </span></p>
+        <p><b>Energy Cost:   </b> <span id='info-energy-cost'> </span></p>
+        <hr>
       </div>
-      <div id='co2-info' class='info'>
-        <p class='info-box-text'><span id='co2-value'>0</span><br>kg CO2</p>
+      <div id="total-info">
+        <h3> Total </h3>
+        <center>
+        <div id='kwh-info' class='info'>
+          <p class='info-box-text'><span id='kwh-value'>0</span><br>kWh</p>
+        </div>
+        <div id='co2-info' class='info'>
+          <p class='info-box-text'><span id='co2-value'>0</span><br>kg CO2</p>
+        </div>
+        <div id='gbp-info' class='info'>
+          <p class='info-box-text'><span id='gbp-value'>0</span><br>&pound</p>
+        </div>
+        </center>
       </div>
-      <div id='gbp-info' class='info'>
-        <p class='info-box-text'><span id='gbp-value'>0</span><br>&pound</p>
-      </div>
-      </center>
     </div>
     <div id='logo-box'>   
       <img id='logo' src='https://hub.birmingham.ac.uk/sites/uob/files/uob_crest_logo_black_1200x628.png'/>
+      <div id="buttons">
+        <button id="24h-visualisation-button" onclick="button_onclick(0)">24h Visualisation</button>
+        <button id="historical-graph-button" onclick="button_onclick(1)">Historical Graph</button>
+        <button id="real-time-graph-button" onclick="button_onclick(2)">Real-Time Graph</button>
+      </div>
     </div>
     <div id='visualisation-container'>
-      <canvas id='visualisation-canvas'>
+      <canvas id='visualisation-canvas' onclick="handle_click(event)">
       </canvas>
       <div id='info-box-spacer'>
       </div>
