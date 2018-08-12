@@ -522,9 +522,7 @@ function handle_click(e) {
     clear_info();
     return;
   }
-  
-  console.log("Click recorded (" + mouse_x + "," + mouse_y + ")");
-  
+
   // See if the click interesects with any of the circles
   for(i = 0; i < CIRCLES.length; i++) {
     // A point (x, y) is within a circle with center (a, b) and radius r iff
@@ -575,15 +573,25 @@ function draw(newscreen) {
       draw_text(circ.a, circ.b, radius, DATA.buildings[i]);
     }
 
-    building_info.style.display = "block";
+      building_info.style.display = "block";
+
+      // write the appropriate description text
+      vis_description.innerHTML = VIS_TXT_24H;
   }
   else if(CURRENT_SCREEN === 1) {
     Plotly.newPlot('visualisation-container', plot_data, layout);
       energy_co2_switch.style.display = "block";
+
+      // write the appropriate description text
+      vis_description.innerHTML = VIS_TXT_HIST_ENER;
   }
   else if(CURRENT_SCREEN === 2) {
       // TODO: plot the real-time data :)
       energy_co2_switch.style.display = "block";
+
+      // write the appropriate description text
+      vis_description.innerHTML = VIS_TXT_RT_ENER;
+
   }
 }
 
@@ -610,6 +618,7 @@ function update_counters() {
 
     total_cost = (total_energy * 0.1541).toFixed(2); // UK average is 15.41p/kWh
 
+    // Update the counters based on the data for the current screen
   switch(CURRENT_SCREEN) {
     case 0:
       kwh_counter.innerHTML = total_energy;
