@@ -12,6 +12,19 @@
 
     <script>
 
+      function switch_onclick() {
+        toggle = document.getElementById("switch-input");
+
+        // If the switch is checked, call the switch toggle for the switch,
+        // otherwise, treat it as navigation to the original page
+        if(toggle.checked) {
+          handle_switch_toggle();
+        }
+        else {
+          button_onclick(CURRENT_SCREEN);
+        }
+      }
+
       /*
        * Handle the onclick events for the buttons that change between visualisations
        */
@@ -51,7 +64,7 @@
         <div id='energy-co2-switch'>
           <span> Energy </span>
           <label class="switch">
-            <input id='switch-input' type="checkbox">
+            <input id='switch-input' onclick="switch_onclick()" type="checkbox">
             <span class="slider round"></span>
           </label>
           <span> CO2 </span>
