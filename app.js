@@ -22,6 +22,16 @@ IMPORTED = [13975,14179,18798,55539,61505,62699,65561,64021,36864,39500,87271,89
 
 EXPORTED = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4626,0,0,0,0,0,0,4818,3910,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5194,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1315,2418,0,0,0,0,0,4683,1606,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
+// 'Real-Time' Data
+RT_TIMES = ['0:30','1:00','1:30','2:00','2:30','3:00','3:30','4:00','4:30','5:00','5:30','6:00','6:30','7:00','7:30','8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30','22:00','22:30','23:00','23:30','0:00'];
+RT_MW_CHP_44 = [2188,2172,2172,2078,2016,2008,2016,2016,2008,2000,1922,1914,1906,1922,2063,2180,2172,2180,2164,2172,2172,2188,2180,2188,2180,2180,2180,2172,2164,2164,2164,2148,2164,2156,2172,2164,2180,2172,2172,2195,2195,2195,2188,2203,2203,2203,2203,2094];
+RT_MW_CHP_21 = [1064,1066,1065,1064,1065,1065,1065,1066,1063,1065,1064,1065,1065,1064,1065,1065,1065,1064,1062,1066,1065,1066,1064,1065,1066,1063,1066,1064,1066,1065,1066,1065,1066,1066,1065,1066,1065,1066,1065,1066,1065,1065,1066,1066,1064,1066,1065,1066];
+RT_BLACK_START = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,49.78561401,68.93348694,391.6511536,515.7718658,298.8414764,238.8362885,51.74827576,0,0,0,0,0,0,0,0];
+RT_KW_PV_75 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,2,2,1,2,2,4,3,3,3,5,6,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+RT_KW_515_CHP = [261,262,256,268,262,261,251,269,244,268,272,259,260,259,267,263,261,262,262,260,260,265,261,256,262,266,263,262,254,270,257,265,263,260,262,260,263,252,269,259,262,262,249,268,264,263,254,184];
+RT_IMPORTED = [14,38,36,34,26,8,4,3,33,31,61,149,190,199,433,647,1048,1319,1485,1617,1760,1892,1936,1964,1963,1988,1993,1965,1910,1830,1850,1856,1803,1360,947,759,1007,948,747,633,457,377,294,193,92,41,15,2];
+RT_EXPORTED = [-66,-43,-43,-43,-50,-68,-73,-78,-42,-44,-15,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-19,-41,-58,-74];
+
 var smallCHPTrace = {
   x: DATES,
   y: SMALL_CHP,
@@ -79,6 +89,63 @@ layout = {
   bargap: 0
 };
 
+var rtsmallCHPTrace = {
+    x: RT_TIMES,
+    y: RT_KW_515_CHP,
+    name: "515kW CHP",
+    type: 'bar'
+};
+
+var rtkWPV75Trace = {
+    x: RT_TIMES,
+    y: RT_KW_PV_75,
+    name: "75kW PV",
+    type: 'bar'
+};
+
+var rtMWCHP21Trace = {
+    x: RT_TIMES,
+    y: RT_MW_CHP_21,
+    name: "2.1MW CHP",
+    type: 'bar'
+};
+
+var rtMWCHP44Trace = {
+    x: RT_TIMES,
+    y: RT_MW_CHP_44,
+    name: "4.4MW CHP",
+    type: 'bar'
+};
+
+var rtblackstartTrace = {
+    x: RT_TIMES,
+    y: RT_BLACK_START,
+    name: "1 MW Diesel Engine",
+    type: 'bar'
+};
+
+var rtimportTrace = {
+    x: RT_TIMES,
+    y: RT_IMPORTED,
+    name: "Imported (Grid)",
+    type: 'bar'
+};
+
+var rtexportTrace = {
+    x: RT_TIMES,
+    y: RT_EXPORTED,
+    name: "Exported",
+    type: 'bar'
+};
+
+rt_plot_data = [rtsmallCHPTrace, rtMWCHP21Trace, rtMWCHP44Trace, rtkWPV75Trace, rtblackstartTrace, rtimportTrace, rtexportTrace];
+
+rt_layout = {
+    yaxis: {title: 'Energy Usage/kWh'},
+    barmode: 'stack',
+    bargap: 0
+};
+
 CIRCLES = [];
 
 CIRC_MAX_TXT_SIZE = 48;
@@ -111,8 +178,8 @@ vis_description = null;
 VIS_TXT_24H = "This visualisation shows the energy usage and Co2 emissions of buildings across campus.";
 VIS_TXT_HIST_ENER = "This graph shows the energy usage of buildings across campus, and the source of the energy, across a period of time.";
 VIS_TXT_HIST_CO2 = "This graph shows the CO2 emissions of buildings across campus, and the source of that CO2, across a period of time.";
-VIS_TXT_RT_ENER = "This graph shows real-time data of energy usage on campus.";
-VIS_TXT_RT_CO2 = "This graph shows real-time data of CO2 emissions on campus.";
+VIS_TXT_RT_ENER = "This graph shows real-time data of energy usage on campus, and the past 24 hours.";
+VIS_TXT_RT_CO2 = "This graph shows real-time data of CO2 emissions on campus, and the past 24 hours.";
 
 energy_co2_switch = null;
 
@@ -589,7 +656,7 @@ function draw(newscreen) {
       vis_description.innerHTML = VIS_TXT_24H;
   }
   else if(CURRENT_SCREEN === 1) {
-    Plotly.newPlot('visualisation-container', plot_data, layout);
+      Plotly.newPlot('visualisation-container', plot_data, layout);
       energy_co2_switch.style.display = "block";
       kwh_counter_wrap.style.display = "inline-block";
       co2_counter_wrap.style.display = "none";
@@ -599,7 +666,7 @@ function draw(newscreen) {
       vis_description.innerHTML = VIS_TXT_HIST_ENER;
   }
   else if(CURRENT_SCREEN === 2) {
-      // TODO: plot the real-time data :)
+      Plotly.newPlot('visualisation-container', rt_plot_data, rt_layout);
       energy_co2_switch.style.display = "block";
       kwh_counter_wrap.style.display = "inline-block";
       co2_counter_wrap.style.display = "none";
@@ -666,7 +733,43 @@ function handle_switch_toggle() {
         co2_counter_wrap.style.display = "inline-block";
         kwh_counter_wrap.style.display = "none";
 
-        // TODO: plot the real-time co2 data
+        // calculate the historic co2 data for both campus and grid
+        rt_campus_co2_data = [];
+        for(i = 0; i < RT_KW_515_CHP.length; i++) {
+            chps = (RT_KW_515_CHP[i] + RT_MW_CHP_21[i] + RT_MW_CHP_44[i] * CHP_INTENSITY);
+            blackstart = (RT_BLACK_START[i] * BLACK_START_INTENSITY);
+            pv = (RT_KW_PV_75[i] * PV_INTENSITY);
+            total = chps + blackstart + pv;
+            rt_campus_co2_data.push(total);
+        }
+        rt_grid_co2_data = [];
+        for(i = 0; i < RT_IMPORTED.length; i++) {
+            rt_grid_co2_data[i] = RT_IMPORTED[i] * GRID_INTENSITY;
+        }
+
+        var rtgridCo2Trace = {
+            x: RT_TIMES,
+            y: rt_grid_co2_data,
+            name: "Grid",
+            type: 'bar'
+        };
+
+        var rtcampusCo2Trace = {
+            x: RT_TIMES,
+            y: rt_campus_co2_data,
+            name: "Campus",
+            type: 'bar'
+        };
+
+        rt_co2_plot_data = [rtcampusCo2Trace, rtgridCo2Trace];
+
+        rt_co2_layout = {
+            yaxis: {title: 'CO2 Emissions/Kg CO2'},
+            barmode: 'stack',
+            bargap: 0
+        };
+
+        Plotly.newPlot('visualisation-container', rt_co2_plot_data, rt_co2_layout);
     }
 }
 
@@ -710,6 +813,13 @@ function update_counters() {
       gbp_counter.innerHTML = (total * 0.1541).toFixed(2);
       break;
     case 2:
+        total = 0;
+        for(i = 0; i < rt_plot_data.length; i++) {
+            total += sum(rt_plot_data[i].y);
+        }
+        kwh_counter.innerHTML = total;
+        co2_counter.innerHTML = (total * (7.0/20.0)).toFixed(2);
+        gbp_counter.innerHTML = (total * 0.1541).toFixed(2);
       break;
   }
 }
