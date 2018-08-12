@@ -100,8 +100,11 @@ GRID_INTENSITY = 0.25;
 GR = 1.61803398875; // Golden Ratio
 
 kwh_counter = null;
+kwh_counter_wrap = null;
 co2_counter = null;
+co2_counter_wrap = null;
 gbp_counter = null;
+gbp_counter_wrap = null;
 visualisation_canvas = null;
 
 vis_description = null;
@@ -579,6 +582,8 @@ function draw(newscreen) {
     }
 
       building_info.style.display = "block";
+      co2_counter_wrap.style.display = "inline-block";
+      gbp_counter_wrap.style.display = "inline-block";
 
       // write the appropriate description text
       vis_description.innerHTML = VIS_TXT_24H;
@@ -586,6 +591,9 @@ function draw(newscreen) {
   else if(CURRENT_SCREEN === 1) {
     Plotly.newPlot('visualisation-container', plot_data, layout);
       energy_co2_switch.style.display = "block";
+      kwh_counter_wrap.style.display = "inline-block";
+      co2_counter_wrap.style.display = "none";
+      gbp_counter_wrap.style.display = "none";
 
       // write the appropriate description text
       vis_description.innerHTML = VIS_TXT_HIST_ENER;
@@ -593,6 +601,9 @@ function draw(newscreen) {
   else if(CURRENT_SCREEN === 2) {
       // TODO: plot the real-time data :)
       energy_co2_switch.style.display = "block";
+      kwh_counter_wrap.style.display = "inline-block";
+      co2_counter_wrap.style.display = "none";
+      gbp_counter_wrap.style.display = "none";
 
       // write the appropriate description text
       vis_description.innerHTML = VIS_TXT_RT_ENER;
@@ -607,6 +618,9 @@ function handle_switch_toggle() {
     if(CURRENT_SCREEN === 1) {
         // Change description
         vis_description.innerHTML = VIS_TXT_HIST_CO2;
+
+        co2_counter_wrap.style.display = "inline-block";
+        kwh_counter_wrap.style.display = "none";
 
         // calculate the historic co2 data for both campus and grid
         campus_co2_data = [];
@@ -649,6 +663,8 @@ function handle_switch_toggle() {
     else if(CURRENT_SCREEN === 2) {
         // Change description
         vis_description.innerHTML = VIS_TXT_RT_CO2;
+        co2_counter_wrap.style.display = "inline-block";
+        kwh_counter_wrap.style.display = "none";
 
         // TODO: plot the real-time co2 data
     }
@@ -704,6 +720,10 @@ function update() {
   co2_counter = document.getElementById("co2-value");
   gbp_counter = document.getElementById("gbp-value");
   visualisation_canvas = document.getElementById("visualisation-canvas");
+
+    kwh_counter_wrap = document.getElementById("kwh-info");
+    co2_counter_wrap = document.getElementById("co2-info");
+    gbp_counter_wrap = document.getElementById("gbp-info");
 
     vis_description = document.getElementById("vis-description");
 
