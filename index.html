@@ -11,14 +11,20 @@
     <script src='app.js'></script>
 
     <script>
-      building_info = document.getElementById("building-info");
 
       /*
        * Handle the onclick events for the buttons that change between visualisations
        */
       function button_onclick(value) {
         // Clear the screen
+        building_info = document.getElementById("building-info");
+        switch_holder = document.getElementById("switch-holder");
+        toggle = document.getElementById("switch-input");
+
+        toggle.checked = false;
+
         building_info.style.display = "none";
+        switch_holder.style.display = "none";
 
         const context = document.getElementById("visualisation-canvas").getContext('2d');
         context.clearRect(-100, -100, canvas.width + 100, canvas.height + 100);
@@ -38,8 +44,19 @@
   <body>
     <div id='info-box'>
       <h2> University of Birmingham Energy Interface </h2>
-      <p> This visualisation shows the energy usage and Co2 emissions of buildings across campus.</p>
+      <p id="vis-description"> This visualisation shows the energy usage and Co2 emissions of buildings across campus.</p>
       <hr>
+      <div id="switch-holder" style="display: none">
+        <div></div>
+        <div id='energy-co2-switch'>
+          <span> Energy </span>
+          <label class="switch">
+            <input id='switch-input' type="checkbox">
+            <span class="slider round"></span>
+          </label>
+          <span> CO2 </span>
+        </div>
+      </div>
       <div id="building-info">
         <h3> Building Information </h3>
         <p> <i class="fas fa-arrow-left"></i> Click on a circle to view information about that building </p>
@@ -48,8 +65,8 @@
         <p><b>Energy Usage:  </b> <span id='info-building-energy'> </span></p>
         <p><b>Co2 Emissions: </b> <span id='info-co2-emissions'> </span></p>
         <p><b>Energy Cost:   </b> <span id='info-energy-cost'> </span></p>
-        <hr>
       </div>
+      <hr>
       <div id="total-info">
         <h3> Total </h3>
         <center>

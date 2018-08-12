@@ -99,6 +99,15 @@ co2_counter = null;
 gbp_counter = null;
 visualisation_canvas = null;
 
+vis_description = null;
+VIS_TXT_24H = "This visualisation shows the energy usage and Co2 emissions of buildings across campus.";
+VIS_TXT_HIST_ENER = "This graph shows the energy usage of buildings across campus, and the source of the energy, across a period of time.";
+VIS_TXT_HIST_CO2 = "This graph shows the CO2 emissions of buildings across campus, and the source of that CO2, across a period of time.";
+VIS_TXT_RT_ENER = "This graph shows real-time data of energy usage on campus.";
+VIS_TXT_RT_CO2 = "This graph shows real-time data of CO2 emissions on campus.";
+
+energy_co2_switch = null;
+
 building_info = null;
 building_name = null;
 building_location = null;
@@ -391,7 +400,7 @@ function draw_circle(r, col) {
   
   // draw the circle with centre (a, b) and radius r to the canvas
   ctx = visualisation_canvas.getContext("2d");
-  ctx.translate(0.5, 0.5)
+  ctx.translate(0.5, 0.5);
   ctx.beginPath();
   ctx.arc(a,b,r,0,2*Math.PI);
   ctx.fillStyle = col;
@@ -570,6 +579,11 @@ function draw(newscreen) {
   }
   else if(CURRENT_SCREEN === 1) {
     Plotly.newPlot('visualisation-container', plot_data, layout);
+      energy_co2_switch.style.display = "block";
+  }
+  else if(CURRENT_SCREEN === 2) {
+      // TODO: plot the real-time data :)
+      energy_co2_switch.style.display = "block";
   }
 }
 
@@ -582,6 +596,20 @@ function sum(xs){
 }
 
 function update_counters() {
+    total_energy = get_total_energy();
+    campus_energy = get_campus_energy();
+    grid_energy = total_energy - campus_energy;
+    total_energy = total_energy.toFixed(2);
+
+    // Update MAX_CO2 to be the highest value for Kg Co2 in the DATA
+    MAX_CO2 = get_max_co2();
+
+    campus_co2 = (campus_energy/20.0)*3.5; // Assuming the campus generator is twice as efficient as the grid
+    grid_co2 = (grid_energy/20.0)*7.0; // 20kWh = ~7Kg Co2
+    total_co2 = (campus_co2 + grid_co2).toFixed(2);
+
+    total_cost = (total_energy * 0.1541).toFixed(2); // UK average is 15.41p/kWh
+
   switch(CURRENT_SCREEN) {
     case 0:
       kwh_counter.innerHTML = total_energy;
@@ -609,6 +637,10 @@ function update() {
   gbp_counter = document.getElementById("gbp-value");
   visualisation_canvas = document.getElementById("visualisation-canvas");
 
+    vis_description = document.getElementById("vis-description");
+
+    energy_co2_switch = document.getElementById("switch-holder");
+
   building_info = document.getElementById("building-info");
   building_name = document.getElementById("info-building-name");
   building_location = document.getElementById("info-building-location");
@@ -629,19 +661,6 @@ function update() {
     
   // First, update the total energy/Co2/£ indicators
   // TODO: update this to use the actual metrics, not educated guesses
-  total_energy = get_total_energy();
-  campus_energy = get_campus_energy(); 
-  grid_energy = total_energy - campus_energy;
-  total_energy = total_energy.toFixed(2);
-  
-  // Update MAX_CO2 to be the highest value for Kg Co2 in the DATA
-  MAX_CO2 = get_max_co2();
-  
-  campus_co2 = (campus_energy/20.0)*3.5; // Assuming the campus generator is twice as efficient as the grid
-  grid_co2 = (grid_energy/20.0)*7.0; // 20kWh = ~7Kg Co2
-  total_co2 = (campus_co2 + grid_co2).toFixed(2);
-  
-  total_cost = (total_energy * 0.1541).toFixed(2); // UK average is 15.41p/kWh
 
   update_counters();
 
