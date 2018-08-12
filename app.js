@@ -92,6 +92,11 @@ GRADIENT = ["#FFEBEB", "#FFD8d8", "#FFC4C4", "#FFB1B1", "#FF9D9D", "#FF8989", "#
 
 MAX_CO2 = 0.0;
 
+CHP_INTENSITY = 0.61;
+BLACK_START_INTENSITY = 0.75;
+PV_INTENSITY = 0.50;
+GRID_INTENSITY = 0.25;
+
 GR = 1.61803398875; // Golden Ratio
 
 kwh_counter = null;
@@ -593,6 +598,60 @@ function draw(newscreen) {
       vis_description.innerHTML = VIS_TXT_RT_ENER;
 
   }
+}
+
+function handle_switch_toggle() {
+    // Purge the current Visualisation
+    Plotly.purge('visualisation-container');
+
+    if(CURRENT_SCREEN === 1) {
+        // Change description
+        vis_description.innerHTML = VIS_TXT_HIST_CO2;
+
+        // calculate the historic co2 data for both campus and grid
+        campus_co2_data = [];
+        for(i = 0; i < SMALL_CHP.length; i++) {
+            chps = (SMALL_CHP[i] + MW_CHP_21[i] + MW_CHP_44[i] * CHP_INTENSITY);
+            blackstart = (BLACK_START[i] * BLACK_START_INTENSITY);
+            pv = (KW_PV_75[i] * PV_INTENSITY);
+            total = chps + blackstart + pv;
+            campus_co2_data.push(total);
+        }
+        grid_co2_data = [];
+        for(i = 0; i < IMPORTED.length; i++) {
+            grid_co2_data[i] = IMPORTED[i] * GRID_INTENSITY;
+        }
+
+        var campusCo2Trace = {
+            x: DATES,
+            y: campus_co2_data,
+            name: "Campus",
+            type: 'bar'
+        };
+
+        var gridCo2Trace = {
+            x: DATES,
+            y: grid_co2_data,
+            name: "Grid",
+            type: 'bar'
+        };
+
+        co2_plot_data = [campusCo2Trace, gridCo2Trace];
+
+        co2_layout = {
+            yaxis: {title: 'CO2 Emissions/Kg CO2'},
+            barmode: 'stack',
+            bargap: 0
+        };
+
+        Plotly.newPlot('visualisation-container', co2_plot_data, co2_layout);
+    }
+    else if(CURRENT_SCREEN === 2) {
+        // Change description
+        vis_description.innerHTML = VIS_TXT_RT_CO2;
+
+        // TODO: plot the real-time co2 data
+    }
 }
 
 function sum(xs){
